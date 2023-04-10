@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShopAPI.ModelV;
 using ShopAPI.Services;
@@ -7,6 +8,7 @@ namespace ShopAPI.Controllers
 {
     [Route("api/SanPham")]
     [ApiController]
+  
     public class SanPhamController : ControllerBase
     {
         private readonly ISanPham sanPham;
@@ -49,6 +51,7 @@ namespace ShopAPI.Controllers
 
             }
         }
+        [Authorize]
         [HttpPut("{id:int}")]
         public IActionResult Update(SanPhamVM asanPham , int id)
         {
@@ -66,6 +69,7 @@ namespace ShopAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        [Authorize]
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
@@ -80,6 +84,7 @@ namespace ShopAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        [Authorize]
         [HttpPost]
         public IActionResult Add(SanPhamVM x)
         {

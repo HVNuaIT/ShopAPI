@@ -14,7 +14,9 @@ namespace ShopAPI.ModelV
         public string matKhau { get; set; }
        
         public string diaChi { get; set; }
-       
+
+       public string soDT { get; set; }
+
         public bool quyen { get; set; }
         
         public bool activer { get; set; }

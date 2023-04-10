@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ShopAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class DBFIST : Migration
+    public partial class FISTDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,7 @@ namespace ShopAPI.Migrations
                     tenNguoiDung = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     matKhau = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    soDT = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     diaChi = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     quyen = table.Column<bool>(type: "bit", nullable: false),
                     activer = table.Column<bool>(type: "bit", nullable: false),
@@ -67,6 +68,46 @@ namespace ShopAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DonHang",
+                columns: table => new
+                {
+                    maHangHoa = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    maSanPham = table.Column<int>(type: "int", nullable: false),
+                    soLuong = table.Column<int>(type: "int", nullable: false),
+                    gia = table.Column<double>(type: "float", nullable: false),
+                    maTaiKhoan = table.Column<int>(type: "int", nullable: false),
+                    hinhAnh = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tenSanPham = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DonHang", x => x.maHangHoa);
+                    table.ForeignKey(
+                        name: "FK_DonHang_SanPham_maSanPham",
+                        column: x => x.maSanPham,
+                        principalTable: "SanPham",
+                        principalColumn: "maSanPham",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DonHang_TaiKhoan_maTaiKhoan",
+                        column: x => x.maTaiKhoan,
+                        principalTable: "TaiKhoan",
+                        principalColumn: "maTaiKhoan",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DonHang_maSanPham",
+                table: "DonHang",
+                column: "maSanPham");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DonHang_maTaiKhoan",
+                table: "DonHang",
+                column: "maTaiKhoan");
+
             migrationBuilder.CreateIndex(
                 name: "IX_SanPham_maLoai",
                 table: "SanPham",
@@ -76,6 +117,9 @@ namespace ShopAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "DonHang");
+
             migrationBuilder.DropTable(
                 name: "SanPham");
 

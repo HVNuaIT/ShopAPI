@@ -64,6 +64,7 @@ namespace ShopAPI.Repository
               maTaiKhoan=s.maTaiKhoan,
               activer=s.activer,
               diaChi=s.diaChi,
+              soDT=s.soDT,
               Email=s.Email,
               EmailActive=s.EmailActive,
               matKhau = s.matKhau,
@@ -82,11 +83,13 @@ namespace ShopAPI.Repository
                     maTaiKhoan = check.maTaiKhoan,
                     activer = check.activer,
                     diaChi = check.diaChi,
+                    soDT=check.soDT,
                     Email = check.Email,
                     EmailActive = check.EmailActive,
                     matKhau = check.matKhau,
                     quyen = check.quyen,
-                    tenNguoiDung = check.tenNguoiDung
+                    tenNguoiDung = check.tenNguoiDung 
+                    
                 };
             }
             return null ;
@@ -103,6 +106,7 @@ namespace ShopAPI.Repository
                 Email = request.Email,
                 matKhau = BCrypt.Net.BCrypt.HashPassword(request.matKhau),
                 quyen = false,
+                soDT=request.soDt,
 
             };
             db.TaiKhoans.Add(vm);
@@ -116,7 +120,7 @@ namespace ShopAPI.Repository
                 diaChi = vm.diaChi,
                 Email = vm.Email,
                 matKhau = BCrypt.Net.BCrypt.HashPassword(vm.matKhau),
-                 
+                 soDt=vm.soDT
 
             };
             
@@ -130,6 +134,7 @@ namespace ShopAPI.Repository
             check.Email = taiKhoans.Email;
             check.quyen= taiKhoans.quyen;
             check.EmailActive = taiKhoans.EmailActive;
+            check.soDT = taiKhoans.soDT;
             if (!string.IsNullOrEmpty(taiKhoans.matKhau))
                 check.matKhau = BCrypt.Net.BCrypt.HashPassword(taiKhoans.matKhau);
             db.SaveChanges();

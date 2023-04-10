@@ -22,6 +22,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IDanhMuc,DanhMucRepository>();
 builder.Services.AddScoped<ISanPham, SanPhamRepository>();
 builder.Services.AddScoped<ITaiKhoan, TaiKhoanRepository>();
+builder.Services.AddScoped<IDatHang, DatHangRepository>();
 builder.Services.Configure<ApiSetting>(builder.Configuration.GetSection("AppSetting"));
 builder.Services.AddDbContext<Context>(o =>
 {

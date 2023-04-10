@@ -18,6 +18,8 @@ namespace ShopAPI.Model
         [Required(ErrorMessage = "Xin Nhập Vào Mật Khẩu")]
         [JsonIgnore]
         public string matKhau { get; set; }
+        [Required(ErrorMessage = "Xin Nhập Số Điện Thoại")]
+        public string soDT { get; set; }
         [Display(Name = "Địa Chỉ Nơi Ở")]
         [Required(ErrorMessage = "Xin Nhập Vào Địa Chỉ")]
         public string diaChi { get;set; }
@@ -29,7 +31,9 @@ namespace ShopAPI.Model
         public bool activer { get; set; }
         [Display(Name = "Chuổi Kích Hoạt Email")]
         [Required(ErrorMessage = "Xin Nhập Vào Chuỗi Active Email")]
-        public Guid EmailActive { get; set; }   
+        public Guid EmailActive { get; set; }
+        
+       
 
     }
 }

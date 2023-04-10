@@ -39,6 +39,7 @@ namespace ShopAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        [Authorize]
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
@@ -52,6 +53,7 @@ namespace ShopAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        [Authorize]
         [HttpPut("{id:int}")]
         public IActionResult Update(int id,DanhMucVM dm)
         {
@@ -73,6 +75,7 @@ namespace ShopAPI.Controllers
                 }
             }
         }
+        [Authorize]
         [HttpPost]
         public IActionResult Add(DanhMucVM dm)
         {

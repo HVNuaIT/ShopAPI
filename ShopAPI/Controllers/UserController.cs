@@ -30,6 +30,7 @@ namespace ShopAPI.Controllers
             taiKhoan = tk;
         }
         [AllowAnonymous]
+        [Authorize]
         [HttpPost("Login")]
         public IActionResult Login(LoginRequest tk)
         {
@@ -76,6 +77,7 @@ namespace ShopAPI.Controllers
             taiKhoan.Register(model);
             return Ok(new { message = "Registration successful" });
         }
+        [Authorize]
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
@@ -90,6 +92,24 @@ namespace ShopAPI.Controllers
             }
 
         }
+        [Authorize]
+        [HttpPut("{id:int}")]
+        public IActionResult Edit(TaiKhoanVM taiKhoanVM, int id)
+        {
+            if (id != taiKhoanVM.maTaiKhoan)
+            {
+                return BadRequest(new { message = "Cập Nhật Không Thành Công Tài Khoản:" + "" + taiKhoanVM.tenNguoiDung });
+            }
+            try
+            {
+                taiKhoan.Update(taiKhoanVM);
+                return Ok(new { message = "Cập Nhật Người dùng " + "" + taiKhoanVM.tenNguoiDung + "" + "Thành Công" });
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
         [HttpGet]
         public IActionResult GetAll() {
 
@@ -102,23 +122,7 @@ namespace ShopAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        [HttpPut("{id:int}")]
-        public IActionResult Edit(TaiKhoanVM taiKhoanVM,int id)
-        {
-            if (id != taiKhoanVM.maTaiKhoan)
-            {
-                return BadRequest(new {message="Cập Nhật Không Thành Công Tài Khoản:"+""+taiKhoanVM.tenNguoiDung});
-            }
-            try
-            {
-                taiKhoan.Update(taiKhoanVM);
-                return Ok(new { message = "Cập Nhật Người dùng " + "" + taiKhoanVM.tenNguoiDung+""+ "Thành Công" });
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
+        
 
     }
 }

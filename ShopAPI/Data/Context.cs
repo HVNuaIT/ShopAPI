@@ -9,5 +9,6 @@ namespace ShopAPI.Data
         public DbSet<DanhMuc>DanhMucs { get; set; }
         public DbSet<SanPham> SanPhams { get; set; }
         public DbSet<TaiKhoan> TaiKhoans { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

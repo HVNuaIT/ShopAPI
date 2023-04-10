@@ -39,6 +39,44 @@ namespace ShopAPI.Migrations
                     b.ToTable("DanhMuc");
                 });
 
+            modelBuilder.Entity("ShopAPI.Model.Order", b =>
+                {
+                    b.Property<int>("maHangHoa")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("maHangHoa"));
+
+                    b.Property<double>("gia")
+                        .HasColumnType("float");
+
+                    b.Property<string>("hinhAnh")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("maSanPham")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int>("maTaiKhoan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("soLuong")
+                        .HasColumnType("int");
+
+                    b.Property<string>("tenSanPham")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("maHangHoa");
+
+                    b.HasIndex("maSanPham");
+
+                    b.HasIndex("maTaiKhoan");
+
+                    b.ToTable("DonHang");
+                });
+
             modelBuilder.Entity("ShopAPI.Model.SanPham", b =>
                 {
                     b.Property<int>("maSanPham")
@@ -106,6 +144,10 @@ namespace ShopAPI.Migrations
                     b.Property<bool>("quyen")
                         .HasColumnType("bit");
 
+                    b.Property<string>("soDT")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("tenNguoiDung")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -113,6 +155,25 @@ namespace ShopAPI.Migrations
                     b.HasKey("maTaiKhoan");
 
                     b.ToTable("TaiKhoan");
+                });
+
+            modelBuilder.Entity("ShopAPI.Model.Order", b =>
+                {
+                    b.HasOne("ShopAPI.Model.SanPham", "SanPham")
+                        .WithMany()
+                        .HasForeignKey("maSanPham")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShopAPI.Model.TaiKhoan", "TaiKhoan")
+                        .WithMany()
+                        .HasForeignKey("maTaiKhoan")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SanPham");
+
+                    b.Navigation("TaiKhoan");
                 });
 
             modelBuilder.Entity("ShopAPI.Model.SanPham", b =>

@@ -87,9 +87,17 @@ namespace ShopAPI.Repository
                 return null;
         }
 
-        public void Update(int id)
+        public void Update(DatHangVM dh)
         {
-            throw new NotImplementedException();
+            var check = db.Orders.SingleOrDefault(x => x.maHangHoa == dh.maHangHoa);
+            check.tenSanPham = dh.tenSanPham;
+            check.gia = dh.gia;
+            check.hinhAnh = dh.hinhAnh;
+            check.soLuong = dh.soLuong;
+            check.maSanPham= dh.maSanPham;
+            check.maTaiKhoan = dh.maTaiKhoan;
+            
+            db.SaveChanges();
         }
 
        

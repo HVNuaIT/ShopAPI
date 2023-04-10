@@ -16,7 +16,7 @@ namespace ShopAPI.Controllers
         {
             datHang = _datHang;
         }
-     
+        [Authorize]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -31,6 +31,7 @@ namespace ShopAPI.Controllers
            
         }
         [HttpGet("{id:int}")]
+        [Authorize]
         public IActionResult GetById(int id)
         {
             try
@@ -82,5 +83,25 @@ namespace ShopAPI.Controllers
             }
 
         }
+        [Authorize]
+        [HttpPut("{id:int}")]
+        public IActionResult Update( DatHangVM dh, int id)
+        {
+            if (id != dh.maHangHoa)
+            {
+                return BadRequest(new { message = "Không Tìm Thấy Đơn Hàng Có Mã :" + id });
+            }
+            try
+            {
+                datHang.Update(dh);
+                return Ok(new { message = "Cập Nhật Đặt Hàng Thành Công" });
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
     }
 }

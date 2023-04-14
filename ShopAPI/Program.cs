@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -33,7 +33,10 @@ var secretKey = builder.Configuration["AppSetting:SecretKey"];
 var setbyte =Encoding.UTF8.GetBytes(secretKey);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(otp =>
+
 {
+    otp.RequireHttpsMetadata = false;
+    otp.SaveToken = true;
     otp.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,
@@ -43,10 +46,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(setbyte),
         ClockSkew = TimeSpan.Zero
     };
-
-
 });
-        //builder.Services.AddAutoMapper(typeof(Program));
+//builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name:"ShopAPI",
+                      builder =>
+                      {
+                          builder.WithOrigins("http://example.com",
+                                               "http://www.contoso.com") // Cấu Hình Kết Nối Với FE 
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                      });
+});
 
 var app = builder.Build();
 
@@ -55,14 +67,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    app.UseCors(x => x
-       .AllowAnyOrigin()
-       .AllowAnyMethod()
-       .AllowAnyHeader());
-
 }
-
+app.UseCors("ShopAPI");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

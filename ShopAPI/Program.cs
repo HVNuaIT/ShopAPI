@@ -24,11 +24,12 @@ builder.Services.AddScoped<ISanPham, SanPhamRepository>();
 builder.Services.AddScoped<ITaiKhoan, TaiKhoanRepository>();
 builder.Services.AddScoped<IDatHang, DatHangRepository>();
 builder.Services.Configure<ApiSetting>(builder.Configuration.GetSection("AppSetting"));
+
 builder.Services.AddDbContext<Context>(o =>
 {
     o.UseSqlServer(builder.Configuration.GetConnectionString("DB"));
 });
-
+EmailHelpSetting.Domen = builder.Configuration.GetConnectionString("Dotnem");
 var secretKey = builder.Configuration["AppSetting:SecretKey"];
 var setbyte =Encoding.UTF8.GetBytes(secretKey);
 

@@ -12,6 +12,6 @@ namespace ShopAPI.Services
         void Update(TaiKhoanVM tk);
         void Delete(int id);
         RegisterRequest Register(RegisterRequest request);
-      
+       
     }
 }
